@@ -42,6 +42,7 @@ jobs:
   kubernetesCI:
 
     runs-on: ubuntu-latest
+    needs: dockerCI
 
     steps:
       - name: Checkout code (config repo)
