@@ -63,6 +63,5 @@ jobs:
 
       - name: Commit and push to repo
         run: |
-          git add ./deployment.yaml
-          git commit -m 'update image version to ${{ vars.APP_VERSION }}'
+          git diff --quiet && git diff --staged --quiet || git commit -am 'update image version to ${{ vars.APP_VERSION }}'
           git push origin main
