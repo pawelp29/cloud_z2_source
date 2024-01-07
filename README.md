@@ -20,3 +20,5 @@ Zadanie `kubernetesCI` odpowiada za aktualizację manifestów Kubernetes w repoz
 Aby wygenerować nowy obraz aplikacji, należy zmienić wersję aplikacji w zmiennej `vars.APP_VERSION`, a następnie ręcznie uruchomić łańcuch zadań GitHub Actions. Poniższy zrzut ekranu przedstawia przebieg łańcucha:
 
 ![Widok głównego ekranu GitHub Actions](./pipeline.png)
+
+Link do obrazu na DockerHub: [https://hub.docker.com/r/vicat28/cloud-app](https://hub.docker.com/r/vicat28/cloud-app).
