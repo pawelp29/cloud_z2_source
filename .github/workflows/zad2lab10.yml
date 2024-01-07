@@ -36,6 +36,8 @@ jobs:
           push: true
           tags: '${{ vars.DOCKER_IMAGE }}:${{ vars.APP_VERSION }}'
           labels: ${{ steps.meta.output.labels }}
+          build-args: |
+            APP_VERSION=${{ vars.APP_VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
