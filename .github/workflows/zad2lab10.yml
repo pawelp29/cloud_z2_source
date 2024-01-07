@@ -34,7 +34,34 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           file: ./Dockerfile
           push: true
-          tags: vicat28/cloud-app:${{ vars.APP_VERSION }}
+          tags: '${{ vars.DOCKER_IMAGE }}:${{ vars.APP_VERSION }}'
           labels: ${{ steps.meta.output.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  kubernetesCI:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code (config repo)
+        uses: actions/checkout@v4
+        with:
+          repository: pawelp29/cloud_z2_config
+          ref: main
+          token: ${{ secrets.CONFIG_REPO_TOKEN }}
+      
+      - name: Configure Git
+        run: |
+          git config user.name '${{ vars.GIT_USERNAME }}'
+          git config user.email '${{ vars.GIT_EMAIL }}'
+      
+      - name: Update image tag
+        run: |
+          sed -i 's|image: ${{ vars.DOCKER_IMAGE }}:.*|image: ${{ vars.DOCKER_IMAGE }}:${{ vars.APP_VERSION }}|g' ./deployment.yaml
+
+      - name: Commit and push to repo
+        run: |
+          git add ./deployment.yaml
+          git commit -m 'update image version to ${{ vars.APP_VERSION }}'
+          git push origin main
